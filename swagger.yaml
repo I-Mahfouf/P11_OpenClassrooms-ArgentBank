@@ -69,7 +69,7 @@ paths:
        # - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
@@ -94,13 +94,120 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
+# Début des endpoints qui concernent les transactions
+  /transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Get transactions for the current month
+      description: Retrieve all transactions for the current month
+      responses:
+        '200':
+          description: List of transactions for the current month retrieved successfully
+          schema:
+            $ref: '#/definitions/TransactionsResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+# Récupérer les détails d'une transaction spécifique
+  /transactions/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Get transaction details
+      description: Retrieve details of a specific transaction by its unique ID
+      parameters:
+        - in: path
+          name: transactionId
+          description: Unique ID of transaction 
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The request was successful.
+          schema:
+            $ref: '#/definitions/TransactionApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+# Ajouter une catégorie ou une note à une transaction
+  /transactions/{transactionId}/{item}:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Add category or note to a transaction
+      description: Add a new category or note to a transaction
+      parameters:
+        - in: path
+          name: transactionId
+          description: Unique ID of transaction 
+          required: true
+          type: string
+        - in: path
+          name: item
+          description: Category or note
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: New category and note information for the transaction
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionCategoryNote'  
+      responses:
+        '200':
+          description: The request was successful, the category or note was added correctly
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+# Supprimer une note d'une transaction
+  /transactions/{transactionId}/notes/{noteId}:
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: Delete a note from a transaction
+      description: Delete a note associated with a specific transaction
+      parameters:
+        - in: path
+          name: transactionId
+          description: Unique ID of the transaction
+          required: true
+          type: string
+        - in: path
+          name: noteId
+          description: Unique ID of the note to be deleted
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Note deleted successfully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields or Note cannot be deleted
+        '500':
+          description: Internal Server Error
+
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -155,4 +262,44 @@ definitions:
     type: object
     properties:
       userName:
+        type: string
+# Définition de la réponse pour la liste des transactions
+  TransactionsResponse: 
+    type: object
+    properties:
+      transactions:
+        type: array
+        items:
+          $ref: '#/definitions/TransactionApiResponse'
+# Réponse de l'API pour une transaction individuelle
+  TransactionApiResponse:
+    type: object
+    properties:
+      transactionId:
+        type: string
+      details:
+        type: string
+# Structure des catégories et des notes associées à une transaction
+  TransactionCategoryNote:
+    type: object
+    properties:
+      category:
+        type: string
+      note:
+        type: string
+# Réponse de l'API pour une catégorie
+  CategoryApiResponse: 
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+# Réponse de l'API pour une note
+  NoteApiResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
         type: string
