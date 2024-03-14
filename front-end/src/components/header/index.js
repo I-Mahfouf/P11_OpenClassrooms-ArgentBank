@@ -7,6 +7,7 @@ import './styles.css';
 
 const Header = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const userProfile = useSelector((state) => state.profile.userProfile); 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -34,7 +35,7 @@ const Header = () => {
         {isLoggedIn ? (
           <>
             <NavLink to='/userpage' className='main-nav-item'>
-              Profil
+              {userProfile.userName} 
             </NavLink>
             <button className='main-nav-item-logout' onClick={handleLogout}>
               <i className='fa fa-sign-out'></i>
