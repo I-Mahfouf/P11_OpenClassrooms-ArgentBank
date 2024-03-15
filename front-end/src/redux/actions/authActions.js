@@ -18,8 +18,8 @@ export const userLogin = (userData) => {
   
   // Action pour gérer la déconnexion de l'utilisateur //
   export const userLogout = () => {
-    localStorage.removeItem("token");
-    sessionStorage.removeItem("token");
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     return {
       type: 'LOGOUT',
     };

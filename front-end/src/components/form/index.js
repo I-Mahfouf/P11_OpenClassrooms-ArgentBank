@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { userLogin } from '../../redux/actions/authActions'; 
-import { useNavigate } from 'react-router-dom'; 
+import { userLogin } from '../../redux/actions/authActions';
+import { useNavigate } from 'react-router-dom';
 
-import "./styles.css"
+import "./styles.css";
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -11,14 +11,15 @@ const Form = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const userData = {
       email: email,
       password: password,
-      rememberMe: rememberMe
+      rememberMe: rememberMe,
     };
 
     try {
@@ -34,15 +35,16 @@ const Form = () => {
         const responseData = await response.json();
         const token = responseData.body.token;
         if (rememberMe) {
-          localStorage.setItem("token", token);
+          localStorage.setItem('token', token);
         } else {
-          sessionStorage.setItem("token", token);
+          sessionStorage.setItem('token', token);
         }
-        navigate("/userpage");
+        navigate('/userpage');
         dispatch(userLogin({ token }));
-      } else if (response.status === 401) {
-        localStorage.removeItem("token");
-        sessionStorage.removeItem("token");
+      } else if (response.status === 400) {
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        setErrorMessage('Invalid username or password'); 
       }
     } catch (error) {
       console.error('Erreur :', error);
@@ -53,15 +55,19 @@ const Form = () => {
     <section className="sign-in-content">
       <i className="fa fa-user-circle sign-in-icon"></i>
       <h1>Sign In</h1>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       <form onSubmit={handleSubmit}>
         <div className="input-wrapper">
           <label htmlFor="username">Username</label>
-          <input type="text" 
-          id="username" value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          autoComplete="username" 
-          required />
+          <input
+            type="text"
+            id="username"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autoComplete="username"
+            required
+          />
         </div>
         <div className="input-wrapper">
           <label htmlFor="password">Password</label>
@@ -89,6 +95,6 @@ const Form = () => {
       </form>
     </section>
   );
-}
+};
 
 export default Form;

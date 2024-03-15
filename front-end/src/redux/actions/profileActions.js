@@ -6,7 +6,7 @@ export const UPDATE_USERNAME = "UPDATE_USER_NAME";
 export const PROFILE_ERROR = "PROFILE_ERROR"; 
 
 // Helper pour obtenir le token //
-const getToken = () => localStorage.getItem("token") || sessionStorage.getItem("token");
+const getToken = () => localStorage.getItem('token') || sessionStorage.getItem('token');
 
 // Action pour récupérer le profil de l'utilisateur //
 export const fetchUserProfile = () => async (dispatch) => {
