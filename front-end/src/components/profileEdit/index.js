@@ -77,7 +77,7 @@ const ProfileEdit = () => {
         </>
       ) : (
         <div>
-          <h1 className='welcome-user'>Welcome back {userProfile.userName}!</h1>
+          <h1 className='welcome-user'>Welcome back {userProfile.userName} !</h1>
           <button className="edit-button" onClick={handleEditClick}>Edit Name</button>
         </div>
       )}

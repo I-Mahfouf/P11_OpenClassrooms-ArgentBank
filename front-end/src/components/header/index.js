@@ -35,6 +35,7 @@ const Header = () => {
         {isLoggedIn ? (
           <>
             <NavLink to='/userpage' className='main-nav-item'>
+              <i className='fa fa-user-circle'></i>
               {userProfile.userName} 
             </NavLink>
             <button className='main-nav-item-logout' onClick={handleLogout}>

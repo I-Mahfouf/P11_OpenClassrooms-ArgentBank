@@ -1,3 +1,9 @@
+.group-accounts {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .account {
   display: flex;
   justify-content: space-between;
