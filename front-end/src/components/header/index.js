@@ -3,6 +3,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'; 
 import Logo from '../../assets/argentBankLogo.png';
 import { userLogout, setLoggedIn } from '../../redux/actions/authActions';
+import { fetchUserProfile } from '../../redux/actions/profileActions'; 
+
 import './styles.css';
 
 const Header = () => {
@@ -22,6 +24,7 @@ const Header = () => {
     
     if (tokenLocal || tokenSession) {
       dispatch(setLoggedIn());
+      dispatch(fetchUserProfile());
     }
   }, [dispatch]);
 

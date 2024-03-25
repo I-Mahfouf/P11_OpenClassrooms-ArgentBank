@@ -13,7 +13,7 @@ const initialState = {
           ...state,
           isLoggedIn: true,
         };
-      case 'LOGIN':
+      case 'USER_LOGIN':
         return {
           ...state, // Crée une copie de l'état existant //
           isLoggedIn: true,
