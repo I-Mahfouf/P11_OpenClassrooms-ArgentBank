@@ -102,6 +102,7 @@ paths:
         '500':
           description: Internal Server Error
 # Début des endpoints qui concernent les transactions
+# Récupérer toutes les transactions du mois en cours
   /transactions:
     get:
       security:
@@ -277,8 +278,25 @@ definitions:
     properties:
       transactionId:
         type: string
-      details:
+      date:
         type: string
+        format: date
+        description: Date of the transaction
+      description:
+        type: string
+        description: Description of the transaction
+      amount:
+        type: number
+        description: Amount of the transaction
+      transaction_type:
+        type: string
+        description: Type of transaction
+      note:
+        type: string
+        description: Note of the transaction
+      category:
+        type: string
+        description: Category of the transaction
 # Structure des catégories et des notes associées à une transaction
   TransactionCategoryNote:
     type: object
